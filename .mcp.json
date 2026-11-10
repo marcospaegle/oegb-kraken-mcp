@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "oegb-kraken": {
+      "command": "node",
+      "args": ["dist/index.js"],
+      "env": { "OCTOPUS_API_KEY": "${OCTOPUS_API_KEY:-}" }
+    }
+  }
+}
