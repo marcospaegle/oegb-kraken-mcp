@@ -31,5 +31,14 @@
   "devDependencies": {
     "@types/node": "^26.6.6",
     "typescript": "^7.0.2"
+  },
+  "author": "Marcos Paegle",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marcospaegle/oegb-kraken-mcp.git"
+  },
+  "homepage": "https://github.com/marcospaegle/oegb-kraken-mcp#readme",
+  "bugs": {
+    "url": "https://github.com/marcospaegle/oegb-kraken-mcp/issues"
   }
 }
