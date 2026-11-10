@@ -94,14 +94,25 @@ export function registerTools(server: McpServer) {
       title: "Get account details",
       description:
         "Get an Octopus Energy account by account number (e.g. A-1234ABCD). Needs OCTOPUS_API_KEY. " +
+        "account_number is optional if OCTOPUS_ACCOUNT_NUMBER is configured. Call without it before asking the user. " +
         "Returns properties with electricity meter points (MPAN, meter serial numbers) and gas meter points (MPRN, serials), " +
         "plus tariff agreements (tariff_code, valid_from/valid_to). Use these with get_consumption and get_tariff_rates.",
       inputSchema: {
-        account_number: z.string().min(1),
+        account_number: z.string().min(1).optional().describe("Defaults to OCTOPUS_ACCOUNT_NUMBER if set."),
       },
       annotations,
     },
-    ({ account_number }) => run(() => krakenGet(`/accounts/${seg(account_number)}/`, {}, { auth: true })),
+    ({ account_number }) =>
+      run(() => {
+        const account = account_number ?? process.env.OCTOPUS_ACCOUNT_NUMBER?.trim();
+        if (!account) {
+          throw new KrakenError(
+            "No account number given. Pass account_number (e.g. A-1234ABCD), or set the OCTOPUS_ACCOUNT_NUMBER " +
+              "environment variable in your MCP server config.",
+          );
+        }
+        return krakenGet(`/accounts/${seg(account)}/`, {}, { auth: true });
+      }),
   );
 
   server.registerTool(

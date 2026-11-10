@@ -3,7 +3,10 @@
     "oegb-kraken": {
       "command": "node",
       "args": ["dist/index.js"],
-      "env": { "OCTOPUS_API_KEY": "${OCTOPUS_API_KEY:-}" }
+      "env": {
+        "OCTOPUS_API_KEY": "${OCTOPUS_API_KEY:-}",
+        "OCTOPUS_ACCOUNT_NUMBER": "${OCTOPUS_ACCOUNT_NUMBER:-}"
+      }
     }
   }
 }

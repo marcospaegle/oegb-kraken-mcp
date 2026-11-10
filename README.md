@@ -13,10 +13,12 @@ It lets AI agents look up tariffs, half-hourly prices, account details and smart
 | `get_account` | Account, meter points (MPAN/MPRN), meter serials, tariff agreements | **yes** |
 | `get_consumption` | Electricity/gas consumption, optionally grouped by day/week/month/quarter | **yes** |
 
-## API key
+## API key and account number
 
 Account and consumption data need your personal API key. Find it in your Octopus account under **Personal details → API access**.
 Set it as `OCTOPUS_API_KEY`. The key stays on your machine and is sent only to the Kraken API.
+
+Optionally set `OCTOPUS_ACCOUNT_NUMBER` (e.g. `A-1234ABCD`, shown on your bills and the Octopus dashboard). Then the agent can fetch your account without asking for the number.
 
 ## Install
 
@@ -25,7 +27,7 @@ Requires Node.js 18+.
 **Claude Code**
 
 ```sh
-claude mcp add oegb-kraken -e OCTOPUS_API_KEY=sk_live_xxx -- npx -y oegb-kraken-mcp
+claude mcp add oegb-kraken -e OCTOPUS_API_KEY=sk_live_xxx -e OCTOPUS_ACCOUNT_NUMBER=A-1234ABCD -- npx -y oegb-kraken-mcp
 ```
 
 **Claude Desktop** (`claude_desktop_config.json`) and other MCP clients:
@@ -36,7 +38,10 @@ claude mcp add oegb-kraken -e OCTOPUS_API_KEY=sk_live_xxx -- npx -y oegb-kraken-
     "oegb-kraken": {
       "command": "npx",
       "args": ["-y", "oegb-kraken-mcp"],
-      "env": { "OCTOPUS_API_KEY": "sk_live_xxx" }
+      "env": {
+        "OCTOPUS_API_KEY": "sk_live_xxx",
+        "OCTOPUS_ACCOUNT_NUMBER": "A-1234ABCD"
+      }
     }
   }
 }
@@ -49,7 +54,7 @@ Optional: `OCTOPUS_API_BASE_URL` overrides the API base URL (default `https://ap
 ## Example prompts
 
 - "What are the Agile prices for region C tonight?"
-- "How much electricity did I use per day last week on account A-1234ABCD?"
+- "How much electricity did I use per day last week?"
 
 ## Development
 
